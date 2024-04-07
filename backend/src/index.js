@@ -1,20 +1,20 @@
 import express from 'express';
-import jwt from 'jsonwebtoken'; // jsonwebtoken 추가
+import jwt from 'jsonwebtoken';
 import cors from 'cors';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-
-// 임의의 시크릿 키
 const secretKey = 'your_secret_key';
 
+//middlewares
+app.use(express.json());
+// CORS 미들웨어 추가
 app.use(cors());
 
 // 토큰을 검증하는 미들웨어 함수
 const verifyToken = (req, res, next) => {
     const token = req.headers.authorization?.split(' ')[1];
 
-    console.log(token);
     if (!token) {
         return res.status(401).json({message: '토큰이 없습니다.'});
     }
@@ -31,19 +31,26 @@ const verifyToken = (req, res, next) => {
 
 // /login 엔드포인트
 app.post('/login', (req, res) => {
-    const { username, password } = req.body;
+    try{
+        console.log('값은 바로바로바로 :', req.body);
+        const { username, password } = req.body;
 
-    // 여기에 로그인 및 인증 로직을 구현합니다.
-    // 예를 들어, 데이터베이스에서 아이디와 패스워드를 확인하고 인증 토큰을 생성하는 등의 작업을 수행합니다.
+        // 여기에 로그인 및 인증 로직을 구현합니다.
+        // 예를 들어, 데이터베이스에서 아이디와 패스워드를 확인하고 인증 토큰을 생성하는 등의 작업을 수행합니다.
 
-    console.log('사용자 아이디:', username);
-    console.log('비밀번호:', password);
+        console.log('사용자 아이디:', username);
+        console.log('비밀번호:', password);
 
-    // 토큰 생성
-    const token = jwt.sign({ username }, secretKey, { expiresIn: '1h' });
+        // 토큰 생성
+        const token = jwt.sign({ username }, secretKey, { expiresIn: '1h' });
 
-    // 토큰을 클라이언트에게 반환
-    res.status(200).json({ message: '로그인 성공', token });
+        // 토큰을 클라이언트에게 반환
+        res.status(200).json({ message: '로그인 성공', token });
+    }catch(e){
+        console.error('An error occurred:', e);
+        res.status(500).json({ message: 'Internal Server Error' });
+    }
+
 });
 
 // /secure 엔드포인트: 토큰을 검증하여 유효한 경우에만 요청 처리

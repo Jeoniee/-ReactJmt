@@ -7,35 +7,30 @@ const Login: React.FC = () => {
 
     const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault();
-
         try {
             const response = await fetch('http://localhost:3000/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ username, password })
+                body: JSON.stringify({ username: username, password: password }),
+                mode: 'cors'
             });
 
             if (response.ok) {
-                // 로그인 성공 시 토큰 받기
+                // 응답이 성공적으로 도착한 경우
                 const data = await response.json();
-                const { token } = data;
-
-                // 토큰을 쿠키에 저장
-                document.cookie = `jwtToken=${token}; path=/`;
-
-                // 로그인 성공
-                console.log('로그인 성공');
+                console.log(data);
             } else {
-                // 로그인 실패
-                const data = await response.json();
-                setErrorMessage(data.message);
+                // 응답이 실패한 경우
+                console.error('응답 실패:', response.statusText);
             }
         } catch (error) {
             console.error('네트워크 에러:', error);
-            setErrorMessage('??');
+            setErrorMessage('틀렸어');
         }
+
+
     };
 
     return (
