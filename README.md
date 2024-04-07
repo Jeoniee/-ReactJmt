@@ -44,3 +44,9 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
 To learn React, check out the [React documentation](https://reactjs.org/).
+
+
+## 서버
+** 클라이언트에서 사용자가 제출한 로그인 정보를 서버로 전송합니다.
+서버에서는 해당 로그인 정보를 검증하고, 유효한 경우 JWT 토큰을 생성합니다.
+생성된 JWT 토큰을 클라이언트에게 응답으로 반환합니다.

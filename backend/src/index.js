@@ -1,26 +1,27 @@
-import express, { Request, Response } from 'express';
-import jwt, { VerifyErrors } from 'jsonwebtoken'; // jsonwebtoken 추가
+import express from 'express';
+import jwt from 'jsonwebtoken'; // jsonwebtoken 추가
+import cors from 'cors';
 
 const app = express();
-const PORT: number = parseInt(process.env.PORT || '3000', 10);
-
+const PORT = process.env.PORT || 3000;
 
 // 임의의 시크릿 키
 const secretKey = 'your_secret_key';
 
-app.use(express.json());
+app.use(cors());
+
 // 토큰을 검증하는 미들웨어 함수
-// 토큰을 검증하는 미들웨어 함수
-const verifyToken = (req: Request, res: Response, next: () => void) => {
+const verifyToken = (req, res, next) => {
     const token = req.headers.authorization?.split(' ')[1];
 
+    console.log(token);
     if (!token) {
-        return res.status(401).json({ message: '토큰이 없습니다.' });
+        return res.status(401).json({message: '토큰이 없습니다.'});
     }
 
-    jwt.verify(token, secretKey, (err: VerifyErrors | null) => {
+    jwt.verify(token, secretKey, (err) => {
         if (err) {
-            return res.status(403).json({ message: '토큰이 유효하지 않습니다.' });
+            return res.status(403).json({message: '토큰이 유효하지 않습니다.'});
         }
 
         // 토큰이 유효한 경우 다음 미들웨어로 이동
@@ -28,9 +29,8 @@ const verifyToken = (req: Request, res: Response, next: () => void) => {
     });
 };
 
-
 // /login 엔드포인트
-app.post('/login', (req: Request<unknown, unknown>, res: Response) => {
+app.post('/login', (req, res) => {
     const { username, password } = req.body;
 
     // 여기에 로그인 및 인증 로직을 구현합니다.
@@ -47,7 +47,7 @@ app.post('/login', (req: Request<unknown, unknown>, res: Response) => {
 });
 
 // /secure 엔드포인트: 토큰을 검증하여 유효한 경우에만 요청 처리
-app.get('/secure', verifyToken, (req: Request, res: Response) => {
+app.get('/secure', verifyToken, (req, res) => {
     res.status(200).json({ message: '토큰이 유효합니다.' });
 });
 
