@@ -1,25 +1,28 @@
 import express from 'express';
 import jwt from 'jsonwebtoken';
 import cors from 'cors';
-
+import cookieParser from 'cookie-parser';
 const app = express();
 const PORT = process.env.PORT || 3000;
-const secretKey = 'your_secret_key';
 
 //middlewares
 app.use(express.json());
 // CORS 미들웨어 추가
 app.use(cors());
 
+// request 객체에 cookies 속성 부여
+app.use(cookieParser());
+
 // 토큰을 검증하는 미들웨어 함수
 const verifyToken = (req, res, next) => {
-    const token = req.headers.authorization?.split(' ')[1];
+    const token = req.headers.authorization?.split(' ')[1]; //accessToken만 추출하기 위함
 
+    console.log(req.cookies); // 클라이언트에서 전송 된 쿠키 출력
     if (!token) {
         return res.status(401).json({message: '토큰이 없습니다.'});
     }
 
-    jwt.verify(token, secretKey, (err) => {
+    jwt.verify(token, process.env.JWT_SECRET, (err) => {
         if (err) {
             return res.status(403).json({message: '토큰이 유효하지 않습니다.'});
         }
@@ -42,15 +45,29 @@ app.post('/login', (req, res) => {
         console.log('비밀번호:', password);
 
         // 토큰 생성
-        const token = jwt.sign({ username }, secretKey, { expiresIn: '1h' });
+        const accessToken = jwt.sign({ username }, process.env.JWT_SECRET, { expiresIn: '60 * 60' });
+        const refreshToken = jwt.sign({ username }, process.env.REFRESH_SECRET, { expiresIn: '1d' });
 
-        // 토큰을 클라이언트에게 반환
-        res.status(200).json({ message: '로그인 성공', token });
+        // 토큰을 클라이언트에게 전달
+        res.cookie('refreshToken', refreshToken, {
+            //쿠키 보안성을 향상시킬수 있게 설정
+            httpOnly: true, // 클라이언트 스크립트에서 쿠키에 접근 불가능
+            secure: true, // https 연결에서만 쿠키 전송
+            sameSite: 'none' // 모든 도메인으로부터 쿠키 전송
+        }).status(200).json({ message: '로그인 성공', accessToken });
+
     }catch(e){
         console.error('An error occurred:', e);
         res.status(500).json({ message: 'Internal Server Error' });
     }
 
+});
+
+// 서버에서 쿠키 설정
+app.get('/setCookie', (req, res) => {
+    // 쿠키 설정
+    res.cookie('username', 'john', { maxAge: 900000, httpOnly: true });
+    res.send('Cookie set!');
 });
 
 // /secure 엔드포인트: 토큰을 검증하여 유효한 경우에만 요청 처리
