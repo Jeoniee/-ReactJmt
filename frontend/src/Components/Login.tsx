@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import styles from './app.module.css'; // CSS 모듈을 가져옴
+import axios from 'axios'; // axios를 import 함
 
 const Login: React.FC = () => {
     const [username, setUsername] = useState('');
@@ -8,21 +10,14 @@ const Login: React.FC = () => {
     const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
-            const response = await fetch('http://localhost:3000/login', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Access-Control-Allow-Origin': '*',
-                    'Access-Control-Allow-Methods': 'GET,POST'
-                },
-                body: JSON.stringify({ username: username, password: password }),
-                mode: 'cors',
-                credentials : 'include' //쿠키포함해서 요청 보내는 거
+            const response = await axios.post('http://localhost:3000/login', {
+                username: username,
+                password: password
             });
 
-            if (response.ok) {
+            if (response.status === 200) {
                 // 응답이 성공적으로 도착한 경우
-                const data = await response.json();
+                const data = response.data;
                 const token = data.accessToken; //서버에서 받아온 accessToken
 
                 //토큰을 쿠키에 마참내 저장
@@ -41,34 +36,36 @@ const Login: React.FC = () => {
 
 
     };
-
     return (
-        <div>
-            <h2>로그인</h2>
-            <form onSubmit={handleLogin}>
-                <div>
-                    <label htmlFor="username">사용자 이름:</label>
+        <div className={styles.loginContainer}>
+            <div className={styles.logo}>
+
+                <h1 className={styles.title}>로그인</h1>
+            </div>
+            <form onSubmit={handleLogin} className={styles.form}>
+                <div className={styles.formGroup}>
                     <input
                         type="text"
-                        id="username"
+                        placeholder="사용자 이름"
                         value={username}
                         onChange={(e) => setUsername(e.target.value)}
+                        className={styles.input}
                     />
                 </div>
-                <div>
-                    <label htmlFor="password">비밀번호:</label>
+                <div className={styles.formGroup}>
                     <input
                         type="password"
-                        id="password"
+                        placeholder="비밀번호"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
+                        className={styles.input}
                     />
                 </div>
-                {errorMessage && <div style={{ color: 'red' }}>{errorMessage}</div>}
-                <button type="submit">로그인</button>
+                {errorMessage && <div className={styles.errorMessage}>{errorMessage}</div>}
+                <button type="submit" className={styles.button}>로그인</button>
             </form>
+            <p className={styles.signupLink}>계정이 없으신가요? <a href="#">가입하기</a></p>
         </div>
     );
 };
-
 export default Login;

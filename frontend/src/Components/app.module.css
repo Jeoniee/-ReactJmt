@@ -1,0 +1,73 @@
+
+/* app.module.css */
+
+.loginContainer {
+    width: 400px;
+    margin: 0 auto;
+    padding: 40px;
+    text-align: center;
+    border-radius: 10px;
+    background-color: #282c34;
+}
+
+.logo {
+    margin-bottom: 40px;
+}
+
+.logoImage {
+    width: 100px;
+    height: auto;
+}
+
+.title {
+    margin-bottom: 20px;
+    color: white;
+}
+
+.formGroup {
+    margin-bottom: 20px;
+}
+
+.input {
+    width: 100%;
+    padding: 15px;
+    border: none;
+    border-radius: 25px;
+    background-color: #FFFFFF;
+    font-size: 16px;
+}
+
+.button {
+    width: 100%;
+    padding: 15px;
+    border: none;
+    border-radius: 25px;
+    background-color: #FFFFFF;
+    color: #1DB954;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.button:hover {
+    background-color: #FFFFFF;
+    color: #147038;
+}
+
+.errorMessage {
+    color: #FFFFFF;
+    margin-top: 10px;
+}
+
+.signupLink {
+    color: #FFFFFF;
+}
+
+.signupLink a {
+    color: #FFFFFF;
+    text-decoration: none;
+}
+
+.signupLink a:hover {
+    text-decoration: underline;
+}

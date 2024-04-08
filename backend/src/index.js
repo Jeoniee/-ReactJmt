@@ -4,12 +4,13 @@ import cors from 'cors';
 import cookieParser from 'cookie-parser';
 const app = express();
 const PORT = process.env.PORT || 3000;
+import dotenv from 'dotenv';
+dotenv.config();
 
 //middlewares
 app.use(express.json());
 // CORS 미들웨어 추가
 app.use(cors());
-
 // request 객체에 cookies 속성 부여
 app.use(cookieParser());
 
@@ -45,8 +46,9 @@ app.post('/login', (req, res) => {
         console.log('비밀번호:', password);
 
         // 토큰 생성
-        const accessToken = jwt.sign({ username }, process.env.JWT_SECRET, { expiresIn: '60 * 60' });
-        const refreshToken = jwt.sign({ username }, process.env.REFRESH_SECRET, { expiresIn: '1d' });
+        const accessToken = jwt.sign({ username }, process.env.JWT_SECRET, { expiresIn: 3600 }); // 3600초 = 1시간
+        const refreshToken = jwt.sign({ username }, process.env.REFRESH_SECRET, { expiresIn: '1d' }); // 1일
+
 
         // 토큰을 클라이언트에게 전달
         res.cookie('refreshToken', refreshToken, {
@@ -64,7 +66,7 @@ app.post('/login', (req, res) => {
 });
 
 // 서버에서 쿠키 설정
-app.get('/setCookie', (req, res) => {
+app.get('/setcookie', (req, res) => {
     // 쿠키 설정
     res.cookie('username', 'john', { maxAge: 900000, httpOnly: true });
     res.send('Cookie set!');
