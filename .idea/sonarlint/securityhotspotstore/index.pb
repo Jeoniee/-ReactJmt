@@ -34,3 +34,9 @@ L
 frontend/src/stores/store.ts,e\b\eb99314b8149a23b93148ff7c586ee6be770a2c8
 R
 "frontend/src/ui/css/app.module.css,5\e\5ea0611e279144d9a48129fcb38ec4ef6f0b235d
+F
+frontend/src/index.tsx,d\9\d910832662c636742fd4ec7481640b032fa4a2d4
+J
+frontend/src/ui/Cookie.tsx,5\d\5dd5985544324506e86f76c16f48e93cd6500608
+Q
+!frontend/src/ui/view/MainView.tsx,7\d\7d53058462bb9bd91e61a500febfaf2ca42ada4f

@@ -3,6 +3,7 @@ import LoginView from "./view/LoginView";
 import axios from "axios";
 import Cookies from "js-cookie";
 import {useAuthStore} from '../stores/store';
+import {useNavigate } from 'react-router-dom';
 
 /**
  * LoginContainer
@@ -13,6 +14,7 @@ const LoginContainer = () => {
     const { username, setUsername, password, setPassword, errorMessage, setErrorMessage }
 = useAuthStore();
 
+    const navigate = useNavigate();
     /**
      * /login 호출
      * @param username
@@ -36,6 +38,8 @@ const LoginContainer = () => {
                 console.log('token,data : ' + token);
                 //로그인 성공 후 secureLogin로 이동
                 secureLogin(token);
+
+                navigate('/MainView', data);
             } else {
                 // 응답이 실패한 경우
                 console.error('응답 실패:', response.statusText);
