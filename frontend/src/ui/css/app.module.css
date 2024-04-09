@@ -3,11 +3,12 @@
 
 .loginContainer {
     width: 400px;
-    margin: 0 auto;
+    margin: 105px auto;
     padding: 40px;
     text-align: center;
     border-radius: 10px;
     background-color: #282c34;
+    font-family: "fantasy";
 }
 
 .logo {
@@ -29,7 +30,7 @@
 }
 
 .input {
-    width: 100%;
+    width: 92%;
     padding: 15px;
     border: none;
     border-radius: 25px;

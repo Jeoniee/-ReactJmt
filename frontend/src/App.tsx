@@ -1,12 +1,12 @@
 // src/App.tsx
 import React from 'react';
-import Login from '../src/Components/Login';
+import LoginContainer from "./ui/LoginContainer";
 
 const App: React.FC = () => {
   return (
       <div className="App">
         <header className="App-header">
-          <Login />
+          <LoginContainer />
         </header>
       </div>
   );
