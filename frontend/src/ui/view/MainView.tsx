@@ -1,5 +1,11 @@
-/**
- * 로그인 후 넘어오는 화면
- * */
+import React from 'react';
 
-export{}
+const MainView = () => {
+    return (
+        <div>
+            안녕하세요
+        </div>
+    );
+};
+
+export default MainView;
