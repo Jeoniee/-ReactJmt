@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import styles from '../css/app.module.css'; // CSS 모듈을 가져옴
+import styles from '../css/app.module.scss'; // CSS 모듈을 가져옴
 
 interface LoginViewProps {
     username: string;
