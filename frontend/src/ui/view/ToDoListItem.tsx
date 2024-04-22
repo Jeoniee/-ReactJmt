@@ -30,4 +30,4 @@ const ToDoListItem : React.FC<Props> = ({todo, onRemove, onToggle}) => {
     );
 };
 
-export default ToDoListItem;
+export default React.memo(ToDoListItem);
