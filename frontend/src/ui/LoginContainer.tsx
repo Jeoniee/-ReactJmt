@@ -37,8 +37,7 @@ const LoginContainer = () => {
                 Cookies.set('token', token,{secure:true, sameSite: 'none'});
                 console.log('token,data : ' + token);
                 //로그인 성공 후 secureLogin로 이동
-                secureLogin(token);
-
+                await secureLogin(token); //await -> secureLogin 이 끝날때까지 기다린다는 뜻
                 navigate('/MainView', data);
             } else {
                 // 응답이 실패한 경우
