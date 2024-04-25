@@ -5,7 +5,7 @@ import ToDoTemplate from "./ToDoTemplate";
 
 function createBulkTodos(){
     const array = [];
-    for (let i = 0; i < 2500; i++) {
+    for (let i = 1; i <= 10; i++) {
         array.push({
             id : i,
             text : `todo ${i}`,
@@ -32,7 +32,7 @@ function todoReducer(todos:any, action:any){
 
 const MainView = () => {
     const [todos, dispatch] = useReducer(todoReducer,[],createBulkTodos);
-    const nextId = useRef(2501);
+    const nextId = useRef(11);
     const onInsert = useCallback(
         (text:any) => {
             const todo = {
