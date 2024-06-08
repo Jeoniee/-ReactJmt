@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import styles from '../css/app.module.scss'; // CSS 모듈을 가져옴
 
+/**
+ * TODO :
+ * */
 interface LoginViewProps {
     username: string;
     password: string;
@@ -21,7 +24,6 @@ const LoginView: React.FC<LoginViewProps> = ({
     return (
         <div className={styles.loginContainer}>
             <div className={styles.logo}>
-
                 <h1 className={styles.title}>REACT JMT</h1>
             </div>
             <form onSubmit={handleLogin} className={styles.form}>

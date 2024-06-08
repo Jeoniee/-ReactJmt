@@ -14,9 +14,37 @@
         display: flex;
         align-items: center;
         justify-content: center;
+
     }
 
     .content {
         background: white;
     }
+
+    .modal {
+        margin-top : 20px;
+        padding : 20px;
+        background-color: #61dafb;
+        text-align : left;
+    }
+
+    button {
+        background: none;
+        outline: none;
+        border: none;
+        background:#868e96;
+        color: white;
+        padding-left:1rem;
+        padding-right:1rem;
+        font-size: 1.5rem;
+        display: flex;
+        align-items:center;
+        cursor:pointer;
+        transition:0.1s background ease-in;
+        justify-content: flex-end;
+        &:hover {
+            background:#adb5bd;
+        }
+    }
 }
+

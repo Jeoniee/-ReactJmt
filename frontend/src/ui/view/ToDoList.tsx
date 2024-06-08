@@ -1,6 +1,7 @@
 import ToDoListItem from './ToDoListItem';
+import {List} from 'react-virtualized';
 import '../css/ToDoList.scss';
-import React from 'react';
+import React,{useCallback} from 'react';
 import { Todo } from './types';
 
 interface Props {
@@ -9,13 +10,33 @@ interface Props {
     onToggle : (id:number) => void;
 }
 const ToDoList : React.FC<Props> = ( {todos, onRemove, onToggle}) => {
+    const rowRenderer = useCallback(
+        ({index,key,style} : any) => {
+            const todo = todos[index];
+            return(
+                <ToDoListItem
+                    todo={todo}
+                    key={key}
+                    onRemove={onRemove}
+                    onToggle={onToggle}
+                    style={style}
+                />
+            );
+        },
+        [onRemove,onToggle,todos],
+    );
     return (
-        <div className="ToDoList">
-            {todos.map(todo => (
-                <ToDoListItem key={todo.id} todo={todo} onRemove={onRemove} onToggle={onToggle}/>
-            ))}
-        </div>
+      <List
+        className="ToDoList"
+        width={512}
+        height={513}
+        rowCount={todos.length}
+        rowHeight={57}
+        rowRenderer={rowRenderer}
+        list={todos}
+        style={{outline:'none'}}
+      />
     );
 };
 
-export default ToDoList;
+export default React.memo(ToDoList);

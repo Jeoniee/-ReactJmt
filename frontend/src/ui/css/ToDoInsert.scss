@@ -17,7 +17,7 @@
         flex:1;
     }
 
-    button {
+    .button {
         background: none;
         outline: none;
         border: none;
@@ -27,7 +27,8 @@
         padding-right:1rem;
         font-size: 1.5rem;
         display: flex;
-        align-items:center;
+        align-items:flex-end;
+        text-align: right;
         cursor:pointer;
         transition:0.1s background ease-in;
         &:hover {
